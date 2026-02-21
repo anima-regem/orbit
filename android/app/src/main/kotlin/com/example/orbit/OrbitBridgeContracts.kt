@@ -123,6 +123,7 @@ object OrbitBridgeContracts {
         val dimensions = OrbitOverlayDimensions(
             horizontalOffsetPx = number(layout["horizontalOffsetPx"], 0f).toInt(),
             verticalOffsetPx = number(layout["verticalOffsetPx"], 0f).toInt(),
+            zAxisPx = number(layout["zAxisPx"], 0f).toInt().coerceIn(0, 160),
             compactWidthFactor = compactWidthFactor,
             compactHeightDp = compactHeightDp,
             expandedWidthFactor = expandedWidthFactor,

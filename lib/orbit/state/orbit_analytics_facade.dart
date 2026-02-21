@@ -84,7 +84,8 @@ class OrbitAnalyticsFacade {
     if (settings.overlayWidthFactor != 0.42 ||
         settings.overlayCompactHeightDp != 52 ||
         settings.overlayOffsetXPx != 0 ||
-        settings.overlayOffsetYPx != 0) {
+        settings.overlayOffsetYPx != 0 ||
+        settings.overlayZAxisPx != 0) {
       return 'control_seeker';
     }
     return 'commuter_listener';

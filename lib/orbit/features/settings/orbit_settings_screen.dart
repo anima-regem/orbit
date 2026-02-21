@@ -151,6 +151,108 @@ class OrbitSettingsScreen extends ConsumerWidget {
         ),
         const SizedBox(height: 12),
         OrbitSectionCard(
+          title: 'Placement & Depth',
+          subtitle:
+              'Adjust native overlay position, size, and z-axis lift in real time',
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                'Vertical offset: ${settings.overlayOffsetYPx.toStringAsFixed(0)} px',
+              ),
+              Slider(
+                min: -96,
+                max: 160,
+                divisions: 256,
+                value: settings.overlayOffsetYPx,
+                onChanged: (double value) {
+                  unawaited(
+                    ref
+                        .read(orbitSettingsControllerProvider.notifier)
+                        .setOffsetY(value),
+                  );
+                },
+              ),
+              Text(
+                'Horizontal offset: ${settings.overlayOffsetXPx.toStringAsFixed(0)} px',
+              ),
+              Slider(
+                min: -120,
+                max: 120,
+                divisions: 240,
+                value: settings.overlayOffsetXPx,
+                onChanged: (double value) {
+                  unawaited(
+                    ref
+                        .read(orbitSettingsControllerProvider.notifier)
+                        .setOffsetX(value),
+                  );
+                },
+              ),
+              Text(
+                'Z-axis lift: ${settings.overlayZAxisPx.toStringAsFixed(0)} px',
+              ),
+              Slider(
+                min: 0,
+                max: 120,
+                divisions: 120,
+                value: settings.overlayZAxisPx,
+                onChanged: (double value) {
+                  unawaited(
+                    ref
+                        .read(orbitSettingsControllerProvider.notifier)
+                        .setZAxis(value),
+                  );
+                },
+              ),
+              Text(
+                'Compact width: ${(settings.overlayWidthFactor * 100).toStringAsFixed(0)}%',
+              ),
+              Slider(
+                min: 0.35,
+                max: 0.8,
+                divisions: 45,
+                value: settings.overlayWidthFactor,
+                onChanged: (double value) {
+                  unawaited(
+                    ref
+                        .read(orbitSettingsControllerProvider.notifier)
+                        .setWidthFactor(value),
+                  );
+                },
+              ),
+              Text(
+                'Compact height: ${settings.overlayCompactHeightDp.toStringAsFixed(0)} dp',
+              ),
+              Slider(
+                min: 48,
+                max: 88,
+                divisions: 40,
+                value: settings.overlayCompactHeightDp,
+                onChanged: (double value) {
+                  unawaited(
+                    ref
+                        .read(orbitSettingsControllerProvider.notifier)
+                        .setCompactHeight(value),
+                  );
+                },
+              ),
+              OutlinedButton.icon(
+                onPressed: () {
+                  unawaited(
+                    ref
+                        .read(orbitSettingsControllerProvider.notifier)
+                        .resetPlacement(),
+                  );
+                },
+                icon: const Icon(Icons.restart_alt_rounded),
+                label: const Text('Reset placement'),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 12),
+        OrbitSectionCard(
           title: 'Notification Trigger Apps',
           subtitle: 'Choose which apps can trigger overlay notifications',
           child: Column(

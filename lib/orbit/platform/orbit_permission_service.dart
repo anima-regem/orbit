@@ -160,11 +160,12 @@ class OrbitPermissionService {
         'setOverlayConfigV2',
         <String, dynamic>{
           'schemaVersion': 2,
-          'layout': const <String, dynamic>{
-            'horizontalOffsetPx': 0,
-            'verticalOffsetPx': 0,
-            'compactWidthFactor': 0.42,
-            'compactHeightDp': 52,
+          'layout': <String, dynamic>{
+            'horizontalOffsetPx': settings.overlayOffsetXPx,
+            'verticalOffsetPx': settings.overlayOffsetYPx,
+            'zAxisPx': settings.overlayZAxisPx,
+            'compactWidthFactor': settings.overlayWidthFactor,
+            'compactHeightDp': settings.overlayCompactHeightDp,
             'expandedWidthFactor': 0.74,
             'musicExpandedHeightDp': 196,
             'notificationExpandedHeightDp': 140,

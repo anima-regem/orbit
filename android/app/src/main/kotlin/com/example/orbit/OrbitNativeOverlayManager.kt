@@ -171,6 +171,7 @@ class OrbitNativeOverlayManager(private val context: Context) {
     fun updateDimensions(newDimensions: OrbitOverlayDimensions) {
         mainHandler.post {
             dimensions = newDimensions
+            updateCardElevation()
             if (isAttached) {
                 updateWindowLayout()
             }
@@ -578,6 +579,7 @@ class OrbitNativeOverlayManager(private val context: Context) {
         expandedMusicArtist = musicArtist
         expandedMusicAlbum = musicAlbum
         controlsRow = controlRow
+        updateCardElevation()
         return root
     }
 
@@ -1160,9 +1162,23 @@ class OrbitNativeOverlayManager(private val context: Context) {
         ).apply {
             gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
             val topBase = (statusBarHeightPx() - dp(32)).coerceAtLeast(0)
-            y = topBase + dimensions.verticalOffsetPx
+            y = topBase + dimensions.verticalOffsetPx - dimensions.zAxisPx
             x = dimensions.horizontalOffsetPx
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                layoutInDisplayCutoutMode =
+                    WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS
+            }
         }
+    }
+
+    private fun updateCardElevation() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            return
+        }
+
+        val card = cardView ?: return
+        val extra = (dimensions.zAxisPx.coerceAtLeast(0) / 10f).coerceIn(0f, 14f)
+        card.elevation = dp(18f + extra).toFloat()
     }
 
     private fun compactWidthPx(): Int {

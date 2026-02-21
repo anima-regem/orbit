@@ -14,6 +14,7 @@ void main() {
 
     expect(settings.overlayEnabled, isTrue);
     expect(settings.musicEnabled, isTrue);
+    expect(settings.overlayZAxisPx, 0);
     expect(
       settings.selectedNotificationPackages,
       contains('com.instagram.android'),
@@ -30,6 +31,7 @@ void main() {
       displaySeconds: 3.4,
       overlayOffsetXPx: 12,
       overlayOffsetYPx: -5,
+      overlayZAxisPx: 24,
       overlayWidthFactor: 0.6,
       overlayCompactHeightDp: 64,
       dynamicThemeEnabled: false,
@@ -45,10 +47,11 @@ void main() {
     expect(loaded.musicEnabled, isFalse);
     expect(loaded.musicPersistent, isFalse);
     expect(loaded.displaySeconds, closeTo(3.4, 0.001));
-    expect(loaded.overlayOffsetXPx, 0);
-    expect(loaded.overlayOffsetYPx, 0);
-    expect(loaded.overlayWidthFactor, closeTo(0.42, 0.001));
-    expect(loaded.overlayCompactHeightDp, 52);
+    expect(loaded.overlayOffsetXPx, 12);
+    expect(loaded.overlayOffsetYPx, -5);
+    expect(loaded.overlayZAxisPx, 24);
+    expect(loaded.overlayWidthFactor, closeTo(0.6, 0.001));
+    expect(loaded.overlayCompactHeightDp, 64);
     expect(loaded.dynamicThemeEnabled, isFalse);
     expect(loaded.reducedMotionEnabled, isTrue);
     expect(loaded.selectedNotificationPackages, <String>{'com.whatsapp'});

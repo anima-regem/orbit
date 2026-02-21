@@ -11,6 +11,7 @@ class OrbitSettingsRepository {
   static const String _displaySecondsKey = 'display_seconds';
   static const String _overlayOffsetXPxKey = 'overlay_offset_x_px';
   static const String _overlayOffsetYPxKey = 'overlay_offset_y_px';
+  static const String _overlayZAxisPxKey = 'overlay_z_axis_px';
   static const String _overlayWidthFactorKey = 'overlay_width_factor';
   static const String _overlayCompactHeightDpKey = 'overlay_compact_height_dp';
   static const String _dynamicThemeEnabledKey = 'dynamic_theme_enabled';
@@ -35,6 +36,8 @@ class OrbitSettingsRepository {
           prefs.getDouble(_overlayOffsetXPxKey) ?? defaults.overlayOffsetXPx,
       overlayOffsetYPx:
           prefs.getDouble(_overlayOffsetYPxKey) ?? defaults.overlayOffsetYPx,
+      overlayZAxisPx:
+          prefs.getDouble(_overlayZAxisPxKey) ?? defaults.overlayZAxisPx,
       overlayWidthFactor:
           prefs.getDouble(_overlayWidthFactorKey) ??
           defaults.overlayWidthFactor,
@@ -65,10 +68,14 @@ class OrbitSettingsRepository {
     await prefs.setBool(_musicEnabledKey, settings.musicEnabled);
     await prefs.setBool(_musicPersistentKey, settings.musicPersistent);
     await prefs.setDouble(_displaySecondsKey, settings.displaySeconds);
-    await prefs.setDouble(_overlayOffsetXPxKey, 0);
-    await prefs.setDouble(_overlayOffsetYPxKey, 0);
-    await prefs.setDouble(_overlayWidthFactorKey, 0.42);
-    await prefs.setDouble(_overlayCompactHeightDpKey, 52);
+    await prefs.setDouble(_overlayOffsetXPxKey, settings.overlayOffsetXPx);
+    await prefs.setDouble(_overlayOffsetYPxKey, settings.overlayOffsetYPx);
+    await prefs.setDouble(_overlayZAxisPxKey, settings.overlayZAxisPx);
+    await prefs.setDouble(_overlayWidthFactorKey, settings.overlayWidthFactor);
+    await prefs.setDouble(
+      _overlayCompactHeightDpKey,
+      settings.overlayCompactHeightDp,
+    );
     await prefs.setBool(_dynamicThemeEnabledKey, settings.dynamicThemeEnabled);
     await prefs.setBool(
       _reducedMotionEnabledKey,

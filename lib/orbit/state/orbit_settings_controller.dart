@@ -87,6 +87,12 @@ class OrbitSettingsController extends AsyncNotifier<OrbitSettings> {
     });
   }
 
+  Future<void> setZAxis(double value) async {
+    await updateWith((OrbitSettings current) {
+      return current.copyWith(overlayZAxisPx: value);
+    });
+  }
+
   Future<void> setWidthFactor(double value) async {
     await updateWith((OrbitSettings current) {
       return current.copyWith(overlayWidthFactor: value);
@@ -110,6 +116,7 @@ class OrbitSettingsController extends AsyncNotifier<OrbitSettings> {
       return current.copyWith(
         overlayOffsetXPx: 0,
         overlayOffsetYPx: 0,
+        overlayZAxisPx: 0,
         overlayWidthFactor: 0.42,
         overlayCompactHeightDp: 52,
       );

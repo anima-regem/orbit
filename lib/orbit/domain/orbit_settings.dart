@@ -6,6 +6,7 @@ class OrbitSettings {
     required this.displaySeconds,
     required this.overlayOffsetXPx,
     required this.overlayOffsetYPx,
+    required this.overlayZAxisPx,
     required this.overlayWidthFactor,
     required this.overlayCompactHeightDp,
     required this.dynamicThemeEnabled,
@@ -22,6 +23,7 @@ class OrbitSettings {
       displaySeconds: 4.0,
       overlayOffsetXPx: 0,
       overlayOffsetYPx: 0,
+      overlayZAxisPx: 0,
       overlayWidthFactor: 0.42,
       overlayCompactHeightDp: 52,
       dynamicThemeEnabled: true,
@@ -40,6 +42,7 @@ class OrbitSettings {
   final double displaySeconds;
   final double overlayOffsetXPx;
   final double overlayOffsetYPx;
+  final double overlayZAxisPx;
   final double overlayWidthFactor;
   final double overlayCompactHeightDp;
   final bool dynamicThemeEnabled;
@@ -54,6 +57,7 @@ class OrbitSettings {
     double? displaySeconds,
     double? overlayOffsetXPx,
     double? overlayOffsetYPx,
+    double? overlayZAxisPx,
     double? overlayWidthFactor,
     double? overlayCompactHeightDp,
     bool? dynamicThemeEnabled,
@@ -68,6 +72,7 @@ class OrbitSettings {
       displaySeconds: displaySeconds ?? this.displaySeconds,
       overlayOffsetXPx: overlayOffsetXPx ?? this.overlayOffsetXPx,
       overlayOffsetYPx: overlayOffsetYPx ?? this.overlayOffsetYPx,
+      overlayZAxisPx: overlayZAxisPx ?? this.overlayZAxisPx,
       overlayWidthFactor: overlayWidthFactor ?? this.overlayWidthFactor,
       overlayCompactHeightDp:
           overlayCompactHeightDp ?? this.overlayCompactHeightDp,

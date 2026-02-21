@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:orbit/orbit/features/settings/orbit_settings_screen.dart';
 
 void main() {
-  testWidgets('placement controls are removed and core settings remain', (
+  testWidgets('placement controls and z-axis lift are available', (
     WidgetTester tester,
   ) async {
     await tester.pumpWidget(
@@ -15,11 +15,12 @@ void main() {
 
     await tester.pumpAndSettle();
 
-    expect(find.text('Placement'), findsNothing);
-    expect(find.textContaining('Vertical offset'), findsNothing);
-    expect(find.textContaining('Horizontal offset'), findsNothing);
-    expect(find.textContaining('Compact width'), findsNothing);
-    expect(find.textContaining('Compact height'), findsNothing);
+    expect(find.text('Placement & Depth'), findsOneWidget);
+    expect(find.textContaining('Vertical offset'), findsOneWidget);
+    expect(find.textContaining('Horizontal offset'), findsOneWidget);
+    expect(find.textContaining('Z-axis lift'), findsOneWidget);
+    expect(find.textContaining('Compact width'), findsOneWidget);
+    expect(find.textContaining('Compact height'), findsOneWidget);
 
     expect(find.text('Enable overlay'), findsOneWidget);
     expect(find.text('Reduced motion'), findsOneWidget);

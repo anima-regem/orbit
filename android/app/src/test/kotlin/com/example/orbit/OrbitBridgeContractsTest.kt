@@ -33,6 +33,7 @@ class OrbitBridgeContractsTest {
             "layout" to mapOf(
                 "horizontalOffsetPx" to 14,
                 "verticalOffsetPx" to -5,
+                "zAxisPx" to 22,
                 "compactWidthFactor" to 0.5,
                 "compactHeightDp" to 60,
             ),
@@ -50,6 +51,7 @@ class OrbitBridgeContractsTest {
 
         assertEquals(14, config.dimensions.horizontalOffsetPx)
         assertEquals(-5, config.dimensions.verticalOffsetPx)
+        assertEquals(22, config.dimensions.zAxisPx)
         assertEquals(0.5f, config.dimensions.compactWidthFactor)
         assertEquals(60, config.dimensions.compactHeightDp)
         assertFalse(config.behavior.musicPersistent)
