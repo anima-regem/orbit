@@ -18,6 +18,8 @@ class OrbitSettingsRepository {
   static const String _reducedMotionEnabledKey = 'reduced_motion_enabled';
   static const String _selectedNotificationPackagesKey =
       'selected_notification_packages';
+  static const String _activeProfileIdKey = 'active_profile_id';
+  static const String _lanePresetKey = 'lane_preset';
   static const String _analyticsEnabledKey = 'analytics_enabled';
 
   Future<OrbitSettings> load() async {
@@ -56,6 +58,10 @@ class OrbitSettingsRepository {
               .map((String value) => value.toLowerCase().trim())
               .where((String value) => value.isNotEmpty)
               .toSet(),
+      activeProfileId: OrbitProfileId.fromValue(
+        prefs.getString(_activeProfileIdKey),
+      ),
+      lanePreset: OrbitLanePreset.fromValue(prefs.getString(_lanePresetKey)),
       analyticsEnabled:
           prefs.getBool(_analyticsEnabledKey) ?? defaults.analyticsEnabled,
     );
@@ -85,6 +91,8 @@ class OrbitSettingsRepository {
       _selectedNotificationPackagesKey,
       settings.selectedNotificationPackages.toList(),
     );
+    await prefs.setString(_activeProfileIdKey, settings.activeProfileId.value);
+    await prefs.setString(_lanePresetKey, settings.lanePreset.value);
     await prefs.setBool(_analyticsEnabledKey, settings.analyticsEnabled);
   }
 }

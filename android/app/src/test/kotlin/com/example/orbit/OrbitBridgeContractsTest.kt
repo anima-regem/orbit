@@ -34,12 +34,15 @@ class OrbitBridgeContractsTest {
                 "horizontalOffsetPx" to 14,
                 "verticalOffsetPx" to -5,
                 "zAxisPx" to 22,
+                "anchorMode" to "top_safe_lane",
+                "lanePreset" to "relaxed",
                 "compactWidthFactor" to 0.5,
                 "compactHeightDp" to 60,
             ),
             "behavior" to mapOf(
                 "musicPersistent" to false,
                 "reducedMotion" to true,
+                "profileId" to "focus",
             ),
             "theme" to mapOf("dynamicThemeEnabled" to false),
             "filters" to mapOf(
@@ -52,11 +55,14 @@ class OrbitBridgeContractsTest {
         assertEquals(14, config.dimensions.horizontalOffsetPx)
         assertEquals(-5, config.dimensions.verticalOffsetPx)
         assertEquals(22, config.dimensions.zAxisPx)
+        assertEquals("top_safe_lane", config.dimensions.anchorMode)
+        assertEquals("relaxed", config.dimensions.lanePreset)
         assertEquals(0.5f, config.dimensions.compactWidthFactor)
         assertEquals(60, config.dimensions.compactHeightDp)
         assertFalse(config.behavior.musicPersistent)
         assertTrue(config.behavior.reducedMotion)
         assertFalse(config.behavior.dynamicThemeEnabled)
+        assertEquals("focus", config.behavior.profileId)
         assertEquals(setOf("com.whatsapp", "com.google.android.gm"), config.allowedPackages)
     }
 
@@ -103,5 +109,20 @@ class OrbitBridgeContractsTest {
         )
 
         assertNull(request)
+    }
+
+    @Test
+    fun `overlay config parser falls back when optional lane fields missing`() {
+        val config = OrbitBridgeContracts.parseOverlayConfigV2(
+            mapOf(
+                "schemaVersion" to 2,
+                "layout" to mapOf("compactHeightDp" to 52),
+                "behavior" to mapOf("musicPersistent" to true),
+            ),
+        )
+
+        assertEquals("top_safe_lane", config.dimensions.anchorMode)
+        assertEquals("balanced", config.dimensions.lanePreset)
+        assertEquals("commute", config.behavior.profileId)
     }
 }

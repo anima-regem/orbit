@@ -8,7 +8,7 @@ import '../../platform/orbit_permission_service.dart';
 import '../../state/orbit_analytics_facade.dart';
 import '../../state/orbit_settings_controller.dart';
 import '../../state/permission_controller.dart';
-import '../dashboard/orbit_dashboard_screen.dart';
+import '../home/orbit_home_screen.dart';
 import '../onboarding/setup_flow_screen.dart';
 import '../settings/orbit_settings_screen.dart';
 
@@ -61,16 +61,10 @@ class _OrbitShellScaffoldState extends ConsumerState<OrbitShellScaffold> {
 
     final List<({String label, IconData icon, Widget page})> destinations =
         <({String label, IconData icon, Widget page})>[
-          if (showSetup)
-            (
-              label: 'Setup',
-              icon: Icons.verified_user_rounded,
-              page: const SetupFlowScreen(),
-            ),
           (
-            label: 'Dashboard',
-            icon: Icons.dashboard_rounded,
-            page: const OrbitDashboardScreen(),
+            label: 'Home',
+            icon: Icons.home_rounded,
+            page: const OrbitHomeScreen(),
           ),
           (
             label: 'Settings',
@@ -83,8 +77,20 @@ class _OrbitShellScaffoldState extends ConsumerState<OrbitShellScaffold> {
       _index = destinations.length - 1;
     }
 
+    if (showSetup) {
+      return SetupFlowScreen(
+        onCompleted: () {
+          setState(() {
+            _index = 0;
+          });
+        },
+      );
+    }
+
+    final String title = _index == 0 ? 'Orbit Home' : 'Orbit Settings';
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Orbit Lite'), centerTitle: false),
+      appBar: AppBar(title: Text(title), centerTitle: false),
       body: IndexedStack(
         index: _index,
         children: destinations

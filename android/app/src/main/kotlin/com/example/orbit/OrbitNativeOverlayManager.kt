@@ -348,6 +348,7 @@ class OrbitNativeOverlayManager(private val context: Context) {
             setOnClickListener {
                 val event = activeEvent ?: return@setOnClickListener
                 isExpanded = !isExpanded
+                onExpandedStateChanged(event)
                 applyEventUi(event)
             }
 
@@ -362,7 +363,11 @@ class OrbitNativeOverlayManager(private val context: Context) {
                         val deltaY = motionEvent.rawY - downY
                         if (isExpanded && deltaY < -dp(22)) {
                             isExpanded = false
-                            activeEvent?.let(::applyEventUi)
+                            val event = activeEvent
+                            if (event != null) {
+                                onExpandedStateChanged(event)
+                                applyEventUi(event)
+                            }
                             return@setOnTouchListener true
                         }
                     }
@@ -1161,8 +1166,12 @@ class OrbitNativeOverlayManager(private val context: Context) {
             PixelFormat.TRANSLUCENT,
         ).apply {
             gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
-            val topBase = (statusBarHeightPx() - dp(32)).coerceAtLeast(0)
-            y = topBase + dimensions.verticalOffsetPx - dimensions.zAxisPx
+            val topBase = if (dimensions.anchorMode == "top_safe_lane") {
+                statusBarHeightPx() + laneInsetPx(dimensions.lanePreset)
+            } else {
+                0
+            }
+            y = topBase + dimensions.verticalOffsetPx
             x = dimensions.horizontalOffsetPx
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                 layoutInDisplayCutoutMode =
@@ -1177,8 +1186,28 @@ class OrbitNativeOverlayManager(private val context: Context) {
         }
 
         val card = cardView ?: return
-        val extra = (dimensions.zAxisPx.coerceAtLeast(0) / 10f).coerceIn(0f, 14f)
+        val extra = (dimensions.zAxisPx.coerceAtLeast(0) / 5f).coerceIn(0f, 24f)
         card.elevation = dp(18f + extra).toFloat()
+        card.translationZ = dp(extra * 0.5f).toFloat()
+    }
+
+    private fun onExpandedStateChanged(event: OverlayEvent) {
+        mainHandler.removeCallbacks(hideRunnable)
+        if (isExpanded) {
+            return
+        }
+
+        when (event) {
+            is OverlayEvent.Notification -> {
+                mainHandler.postDelayed(hideRunnable, event.visibleMs.toLong())
+            }
+
+            is OverlayEvent.Music -> {
+                if (!musicPlaying || !behavior.musicPersistent) {
+                    mainHandler.postDelayed(hideRunnable, event.visibleMs.toLong())
+                }
+            }
+        }
     }
 
     private fun compactWidthPx(): Int {
@@ -1213,6 +1242,14 @@ class OrbitNativeOverlayManager(private val context: Context) {
     private fun statusBarHeightPx(): Int {
         val resId = appContext.resources.getIdentifier("status_bar_height", "dimen", "android")
         return if (resId > 0) appContext.resources.getDimensionPixelSize(resId) else 0
+    }
+
+    private fun laneInsetPx(preset: String): Int {
+        return when (preset.trim().lowercase()) {
+            "tight" -> dp(6)
+            "relaxed" -> dp(26)
+            else -> dp(16)
+        }
     }
 
     private fun spacer(widthDp: Int): View {

@@ -164,6 +164,8 @@ class OrbitPermissionService {
             'horizontalOffsetPx': settings.overlayOffsetXPx,
             'verticalOffsetPx': settings.overlayOffsetYPx,
             'zAxisPx': settings.overlayZAxisPx,
+            'anchorMode': 'top_safe_lane',
+            'lanePreset': settings.lanePreset.value,
             'compactWidthFactor': settings.overlayWidthFactor,
             'compactHeightDp': settings.overlayCompactHeightDp,
             'expandedWidthFactor': 0.74,
@@ -173,6 +175,7 @@ class OrbitPermissionService {
           'behavior': <String, dynamic>{
             'musicPersistent': settings.musicPersistent,
             'reducedMotion': settings.reducedMotionEnabled,
+            'profileId': settings.activeProfileId.value,
           },
           'theme': <String, dynamic>{
             'dynamicThemeEnabled': settings.dynamicThemeEnabled,

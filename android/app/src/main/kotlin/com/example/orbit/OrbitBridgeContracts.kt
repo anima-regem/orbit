@@ -8,6 +8,7 @@ data class OrbitOverlayBehavior(
     val musicPersistent: Boolean = true,
     val reducedMotion: Boolean = false,
     val dynamicThemeEnabled: Boolean = true,
+    val profileId: String = "commute",
 )
 
 data class OrbitOverlayConfigV2(
@@ -114,7 +115,7 @@ object OrbitBridgeContracts {
 
         val compactWidthFactor = number(layout["compactWidthFactor"], 0.42f).coerceIn(0.35f, 0.85f)
         val expandedWidthFactor = number(layout["expandedWidthFactor"], 0.74f).coerceIn(0.55f, 0.92f)
-        val compactHeightDp = number(layout["compactHeightDp"], 52f).toInt().coerceIn(44, 96)
+        val compactHeightDp = number(layout["compactHeightDp"], 52f).toInt().coerceIn(38, 96)
         val musicExpandedHeightDp =
             number(layout["musicExpandedHeightDp"], 196f).toInt().coerceIn(140, 320)
         val notificationExpandedHeightDp =
@@ -124,6 +125,8 @@ object OrbitBridgeContracts {
             horizontalOffsetPx = number(layout["horizontalOffsetPx"], 0f).toInt(),
             verticalOffsetPx = number(layout["verticalOffsetPx"], 0f).toInt(),
             zAxisPx = number(layout["zAxisPx"], 0f).toInt().coerceIn(0, 160),
+            anchorMode = text(layout["anchorMode"]) ?: "top_safe_lane",
+            lanePreset = text(layout["lanePreset"]) ?: "balanced",
             compactWidthFactor = compactWidthFactor,
             compactHeightDp = compactHeightDp,
             expandedWidthFactor = expandedWidthFactor,
@@ -135,6 +138,7 @@ object OrbitBridgeContracts {
             musicPersistent = behaviorMap["musicPersistent"] != false,
             reducedMotion = behaviorMap["reducedMotion"] == true,
             dynamicThemeEnabled = theme["dynamicThemeEnabled"] != false,
+            profileId = text(behaviorMap["profileId"]) ?: "commute",
         )
 
         val allowedPackages = (filters["allowedPackages"] as? List<*>)

@@ -1,3 +1,38 @@
+enum OrbitProfileId {
+  commute('commute'),
+  focus('focus'),
+  social('social'),
+  custom('custom');
+
+  const OrbitProfileId(this.value);
+
+  final String value;
+
+  static OrbitProfileId fromValue(String? raw) {
+    return OrbitProfileId.values.firstWhere(
+      (OrbitProfileId entry) => entry.value == raw,
+      orElse: () => OrbitProfileId.commute,
+    );
+  }
+}
+
+enum OrbitLanePreset {
+  tight('tight'),
+  balanced('balanced'),
+  relaxed('relaxed');
+
+  const OrbitLanePreset(this.value);
+
+  final String value;
+
+  static OrbitLanePreset fromValue(String? raw) {
+    return OrbitLanePreset.values.firstWhere(
+      (OrbitLanePreset entry) => entry.value == raw,
+      orElse: () => OrbitLanePreset.balanced,
+    );
+  }
+}
+
 class OrbitSettings {
   const OrbitSettings({
     required this.overlayEnabled,
@@ -12,6 +47,8 @@ class OrbitSettings {
     required this.dynamicThemeEnabled,
     required this.reducedMotionEnabled,
     required this.selectedNotificationPackages,
+    required this.activeProfileId,
+    required this.lanePreset,
     required this.analyticsEnabled,
   });
 
@@ -32,6 +69,8 @@ class OrbitSettings {
         'com.instagram.android',
         'com.whatsapp',
       },
+      activeProfileId: OrbitProfileId.commute,
+      lanePreset: OrbitLanePreset.balanced,
       analyticsEnabled: true,
     );
   }
@@ -48,6 +87,8 @@ class OrbitSettings {
   final bool dynamicThemeEnabled;
   final bool reducedMotionEnabled;
   final Set<String> selectedNotificationPackages;
+  final OrbitProfileId activeProfileId;
+  final OrbitLanePreset lanePreset;
   final bool analyticsEnabled;
 
   OrbitSettings copyWith({
@@ -63,6 +104,8 @@ class OrbitSettings {
     bool? dynamicThemeEnabled,
     bool? reducedMotionEnabled,
     Set<String>? selectedNotificationPackages,
+    OrbitProfileId? activeProfileId,
+    OrbitLanePreset? lanePreset,
     bool? analyticsEnabled,
   }) {
     return OrbitSettings(
@@ -80,6 +123,8 @@ class OrbitSettings {
       reducedMotionEnabled: reducedMotionEnabled ?? this.reducedMotionEnabled,
       selectedNotificationPackages:
           selectedNotificationPackages ?? this.selectedNotificationPackages,
+      activeProfileId: activeProfileId ?? this.activeProfileId,
+      lanePreset: lanePreset ?? this.lanePreset,
       analyticsEnabled: analyticsEnabled ?? this.analyticsEnabled,
     );
   }

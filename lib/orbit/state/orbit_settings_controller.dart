@@ -25,6 +25,13 @@ class OrbitSettingsController extends AsyncNotifier<OrbitSettings> {
 
   OrbitSettings get _current => state.valueOrNull ?? OrbitSettings.defaults();
 
+  OrbitSettings _withCustomProfile(OrbitSettings settings) {
+    if (settings.activeProfileId == OrbitProfileId.custom) {
+      return settings;
+    }
+    return settings.copyWith(activeProfileId: OrbitProfileId.custom);
+  }
+
   Future<void> updateWith(
     OrbitSettings Function(OrbitSettings value) transform,
   ) async {
@@ -35,37 +42,37 @@ class OrbitSettingsController extends AsyncNotifier<OrbitSettings> {
 
   Future<void> setOverlayEnabled(bool value) async {
     await updateWith((OrbitSettings current) {
-      return current.copyWith(overlayEnabled: value);
+      return _withCustomProfile(current.copyWith(overlayEnabled: value));
     });
   }
 
   Future<void> setMusicEnabled(bool value) async {
     await updateWith((OrbitSettings current) {
-      return current.copyWith(musicEnabled: value);
+      return _withCustomProfile(current.copyWith(musicEnabled: value));
     });
   }
 
   Future<void> setMusicPersistent(bool value) async {
     await updateWith((OrbitSettings current) {
-      return current.copyWith(musicPersistent: value);
+      return _withCustomProfile(current.copyWith(musicPersistent: value));
     });
   }
 
   Future<void> setDisplaySeconds(double value) async {
     await updateWith((OrbitSettings current) {
-      return current.copyWith(displaySeconds: value);
+      return _withCustomProfile(current.copyWith(displaySeconds: value));
     });
   }
 
   Future<void> setDynamicThemeEnabled(bool value) async {
     await updateWith((OrbitSettings current) {
-      return current.copyWith(dynamicThemeEnabled: value);
+      return _withCustomProfile(current.copyWith(dynamicThemeEnabled: value));
     });
   }
 
   Future<void> setReducedMotionEnabled(bool value) async {
     await updateWith((OrbitSettings current) {
-      return current.copyWith(reducedMotionEnabled: value);
+      return _withCustomProfile(current.copyWith(reducedMotionEnabled: value));
     });
   }
 
@@ -77,37 +84,53 @@ class OrbitSettingsController extends AsyncNotifier<OrbitSettings> {
 
   Future<void> setOffsetY(double value) async {
     await updateWith((OrbitSettings current) {
-      return current.copyWith(overlayOffsetYPx: value);
+      return _withCustomProfile(current.copyWith(overlayOffsetYPx: value));
     });
   }
 
   Future<void> setOffsetX(double value) async {
     await updateWith((OrbitSettings current) {
-      return current.copyWith(overlayOffsetXPx: value);
+      return _withCustomProfile(current.copyWith(overlayOffsetXPx: value));
     });
   }
 
   Future<void> setZAxis(double value) async {
     await updateWith((OrbitSettings current) {
-      return current.copyWith(overlayZAxisPx: value);
+      return _withCustomProfile(current.copyWith(overlayZAxisPx: value));
     });
   }
 
   Future<void> setWidthFactor(double value) async {
     await updateWith((OrbitSettings current) {
-      return current.copyWith(overlayWidthFactor: value);
+      return _withCustomProfile(current.copyWith(overlayWidthFactor: value));
     });
   }
 
   Future<void> setCompactHeight(double value) async {
     await updateWith((OrbitSettings current) {
-      return current.copyWith(overlayCompactHeightDp: value);
+      return _withCustomProfile(
+        current.copyWith(overlayCompactHeightDp: value),
+      );
     });
   }
 
   Future<void> setSelectedNotificationPackages(Set<String> packages) async {
     await updateWith((OrbitSettings current) {
-      return current.copyWith(selectedNotificationPackages: packages);
+      return _withCustomProfile(
+        current.copyWith(selectedNotificationPackages: packages),
+      );
+    });
+  }
+
+  Future<void> setLanePreset(OrbitLanePreset preset) async {
+    await updateWith((OrbitSettings current) {
+      return _withCustomProfile(current.copyWith(lanePreset: preset));
+    });
+  }
+
+  Future<void> setActiveProfileId(OrbitProfileId profileId) async {
+    await updateWith((OrbitSettings current) {
+      return current.copyWith(activeProfileId: profileId);
     });
   }
 
@@ -117,8 +140,10 @@ class OrbitSettingsController extends AsyncNotifier<OrbitSettings> {
         overlayOffsetXPx: 0,
         overlayOffsetYPx: 0,
         overlayZAxisPx: 0,
+        lanePreset: OrbitLanePreset.balanced,
         overlayWidthFactor: 0.42,
         overlayCompactHeightDp: 52,
+        activeProfileId: OrbitProfileId.custom,
       );
     });
   }

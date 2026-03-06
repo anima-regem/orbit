@@ -71,6 +71,17 @@ class OrbitAnalyticsFacade {
   }
 
   String _derivePersonaContext(OrbitSettings settings) {
+    switch (settings.activeProfileId) {
+      case OrbitProfileId.commute:
+        return 'commuter_listener';
+      case OrbitProfileId.focus:
+        return 'deep_work_professional';
+      case OrbitProfileId.social:
+        return 'social_responder';
+      case OrbitProfileId.custom:
+        break;
+    }
+
     if (settings.reducedMotionEnabled) {
       return 'accessibility_first_user';
     }

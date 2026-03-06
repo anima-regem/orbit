@@ -1,19 +1,19 @@
 # Orbit Lite Interaction and Motion Spec
 
 ## Product Surface Information Architecture
-Orbit Lite is split into three surfaces:
-- `SetupFlowScreen`: guided permissions and recovery.
-- `OrbitDashboardScreen`: live status, quick trigger actions, now-live preview.
-- `OrbitSettingsScreen`: behavior, placement, app filtering, analytics controls.
+Orbit Lite is split into two persistent surfaces plus one conditional wizard:
+- `SetupFlowScreen`: full-screen guided wizard (4 steps, permission + safe lane calibration).
+- `OrbitHomeScreen`: live card, profile strip, diagnostics controls, now-live preview.
+- `OrbitSettingsScreen`: segmented `Basic` and `Advanced` panes.
 
 Navigation shell:
-- `OrbitShellScaffold` bottom navigation.
-- Setup destination appears only when required permissions are incomplete.
+- `OrbitShellScaffold` bottom navigation with `Home` and `Settings`.
+- Setup wizard gates entry when required permissions are incomplete.
 
 ## Motion System
 ### Permission Setup Microinteractions
 - Step completion confirmation: 180ms scale + fade.
-- Step card transition: 220ms, `easeOutCubic`.
+- Wizard page transition: 240ms, `easeOutCubic`.
 - Haptic: `HapticFeedback.lightImpact` once per newly completed step.
 
 ### Overlay Enter/Exit
@@ -42,6 +42,7 @@ Navigation shell:
   - press in: 90ms
   - release: 120ms
 - Setting toggles update semantic labels immediately.
+- Settings pane switch: 180ms crossfade.
 
 ## Visual Direction: Premium Minimal
 - Contrast-first dark overlay card with restrained gradients.

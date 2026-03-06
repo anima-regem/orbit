@@ -26,7 +26,7 @@ Every event includes:
 - Properties: `kind`, `source_package`, `priority`.
 
 6. `overlay_event_displayed`
-- Properties: `kind`, `queue_size`, `display_ms`.
+- Properties: `kind`, `queue_state`, `display_ms`.
 
 7. `overlay_event_dismissed`
 - Properties: `kind`, `reason` (`timeout`, `user_dismiss`, `preempted`, `paused`).
@@ -45,3 +45,18 @@ Every event includes:
 
 12. `overlay_error`
 - Properties: `stage`, `message`.
+
+13. `profile_changed`
+- Properties: `profile_id`, `source`.
+
+14. `lane_calibration_opened`
+- Properties: `source`.
+
+15. `lane_calibration_saved`
+- Properties: `lane_preset`, `offset_y_px`.
+
+16. `setup_wizard_completed`
+- Properties: `selected_profile`.
+
+17. `advanced_settings_opened`
+- Trigger: user switches to advanced settings pane.

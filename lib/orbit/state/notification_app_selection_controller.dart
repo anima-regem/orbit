@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/orbit_installed_app.dart';
+import 'orbit_analytics_facade.dart';
 import 'orbit_settings_controller.dart';
 import 'permission_controller.dart';
 
@@ -83,5 +84,15 @@ class NotificationAppSelectionController
     await ref
         .read(orbitSettingsControllerProvider.notifier)
         .setSelectedNotificationPackages(next);
+
+    await ref
+        .read(orbitAnalyticsFacadeProvider)
+        .track(
+          'notification_app_toggled',
+          properties: <String, Object?>{
+            'source_package': packageName.toLowerCase(),
+            'selected': selected,
+          },
+        );
   }
 }

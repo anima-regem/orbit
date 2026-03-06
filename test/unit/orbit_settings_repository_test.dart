@@ -15,6 +15,8 @@ void main() {
     expect(settings.overlayEnabled, isTrue);
     expect(settings.musicEnabled, isTrue);
     expect(settings.overlayZAxisPx, 0);
+    expect(settings.activeProfileId, OrbitProfileId.commute);
+    expect(settings.lanePreset, OrbitLanePreset.balanced);
     expect(
       settings.selectedNotificationPackages,
       contains('com.instagram.android'),
@@ -37,6 +39,8 @@ void main() {
       dynamicThemeEnabled: false,
       reducedMotionEnabled: true,
       selectedNotificationPackages: <String>{'com.whatsapp'},
+      activeProfileId: OrbitProfileId.focus,
+      lanePreset: OrbitLanePreset.relaxed,
       analyticsEnabled: false,
     );
 
@@ -55,6 +59,8 @@ void main() {
     expect(loaded.dynamicThemeEnabled, isFalse);
     expect(loaded.reducedMotionEnabled, isTrue);
     expect(loaded.selectedNotificationPackages, <String>{'com.whatsapp'});
+    expect(loaded.activeProfileId, OrbitProfileId.focus);
+    expect(loaded.lanePreset, OrbitLanePreset.relaxed);
     expect(loaded.analyticsEnabled, isFalse);
   });
 }
